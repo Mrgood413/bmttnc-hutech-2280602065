@@ -3,7 +3,6 @@ from caesar import CaesarCipher
 from playfair import PlayFairCipher
 from vigenere import VigenereCipher
 from railfence import RailFenceCipher
-from transposition import TranspositionCipher
 
 app = Flask(__name__)
 
@@ -11,7 +10,6 @@ caesar_cipher = CaesarCipher()
 playfair_cipher = PlayFairCipher()
 vigenere_cipher = VigenereCipher()
 railfence_cipher = RailFenceCipher()
-transposition_cipher = TranspositionCipher()
 
 @app.route("/")
 def home():
@@ -92,25 +90,6 @@ def railfence_decrypt():
     text = request.form['inputCipherText']
     key = int(request.form['inputKeyPlain'])
     decrypted_text = railfence_cipher.rail_fence_decrypt(text, key)
-    return f"text: {text}<br/>key: {key}<br/>decrypted text: {decrypted_text}"
-
-# ---- Transposition ----
-@app.route("/transposition")
-def transposition():
-    return render_template('transposition.html')
-
-@app.route("/transposition/encrypt", methods=["POST"])
-def transposition_encrypt():
-    text = request.form['inputPlainText']
-    key = int(request.form['inputKeyPlain'])
-    encrypted_text = transposition_cipher.encrypt(text, key)
-    return f"text: {text}<br/>key: {key}<br/>encrypted text: {encrypted_text}"
-
-@app.route("/transposition/decrypt", methods=["POST"])
-def transposition_decrypt():
-    text = request.form['inputCipherText']
-    key = int(request.form['inputKeyPlain'])
-    decrypted_text = transposition_cipher.decrypt(text, key)
     return f"text: {text}<br/>key: {key}<br/>decrypted text: {decrypted_text}"
 
 if __name__ == "__main__":
